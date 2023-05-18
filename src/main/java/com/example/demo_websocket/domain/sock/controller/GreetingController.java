@@ -2,8 +2,10 @@ package com.example.demo_websocket.domain.sock.controller;
 
 import com.example.demo_websocket.domain.sock.dto.GreetingVo;
 import com.example.demo_websocket.domain.sock.dto.HelloMessageVo;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -20,7 +22,7 @@ public class GreetingController {
 
 	@MessageMapping("/hello")
 	@SendTo("/topic/greetings")
-	public GreetingVo greeting(HelloMessageVo message) throws Exception {
+	public Object greeting(HelloMessageVo message) throws Exception {
 //		Thread.sleep(1000); // simulated delay
 
 		System.out.println(message.getName());
@@ -29,7 +31,10 @@ public class GreetingController {
 	}
 
 	@MessageMapping("/chat/send")
+	//public void sendMsg(@Payload Map<String,Object> data){
 	public void sendMsg(@Payload Map<String,Object> data){
+
+		System.out.println(data.toString());
 		simpMessagingTemplate.convertAndSend("/topic/1",data);
 	}
 
