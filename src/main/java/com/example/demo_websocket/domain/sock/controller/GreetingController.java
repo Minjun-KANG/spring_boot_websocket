@@ -30,6 +30,16 @@ public class GreetingController {
 		return new GreetingVo("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
 	}
 
+	@MessageMapping("/hello2")
+	@SendTo("/topic/greetings")
+	public Object greeting2(HelloMessageVo message) throws Exception {
+//		Thread.sleep(1000); // simulated delay
+
+		System.out.println(message.getName());
+		System.out.println("Hello2, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+		return new GreetingVo("Hello2, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+	}
+
 	@MessageMapping("/chat/send")
 	//public void sendMsg(@Payload Map<String,Object> data){
 	public void sendMsg(@Payload Map<String,Object> data){
